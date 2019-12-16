@@ -20,6 +20,7 @@ CLoNe was developed mostly for use with structural ensembles, such as those obta
 CLoNe was developed with python 3.7 and the following libraries:
 - scikit-learn 0.21.3
 - scipy 1.3.1
+- statsmodels 0.10.0
 - numpy 1.17.2
 - matplotlib 3.1.0
 - mdtraj 1.9.3

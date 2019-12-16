@@ -66,7 +66,7 @@ A full example without using the config file would be:
 
     python md_clone.py -traj mytraj.xtc -topo mytopo.gro -pdc 5 -at_sel "name CA" -pca 3
 
-This loads the trajectory "mytraj" and its topology, extract the CA atoms xyz coordinates, performs PCA on them and clusters based on the first 3 principal components.
+This loads the trajectory "mytraj" and its topology, extract the CA atoms xyz coordinates, performs PCA on them and the clustering will be based on the first 3 principal components.
 
 For compatible trajectory and topology formats, see documentation of MDtraj.
 

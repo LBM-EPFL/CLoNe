@@ -34,48 +34,44 @@ To test on a series of examples, please run:
 
 Then select the dataset you want to cluster. Plots will be saved in the current folder.
 
-Outside of these tests, you can use clone.py as you would any clustering algorithm from scikit-learn's cluster module.
+Outside of these tests, you can use clone.py as you would any clustering algorithm from scikit-learn's cluster module. Here's the minimal code to run:
 
     from clone import CLoNe
-    clone = CLoNe()
+    clone = CLoNe() # or e.g. CLoNe(pdc=8) to change the input parameter
     clone.fit(data)  # clone.labels_ to access results
 
 Refer to 'run_test.py' or the Jupyter-notebook included for more information.
 
-
-3-Running on structural data
+3a-Running on structural data
 ----
-To run CLoNe on structural examples:
-   
-    python md_clone.py -c APP_bound
+The script to run CLoNe is md_clone.py and requires at least a trajectory file to run (and topology if the trajectory is not a multi-pdb file). 
+You can perform PCA on the atom selection (-at_sel, "name CA or name BB" by default) of your choice by using the "-pca N" option, where N is the amount of principal components you'd like to consider.
+Alternatively, you can use a list of pre-computed features stored in a text file (first line are the headers, 1 frame per row, 1 feature per column). See examples of such files in the 'structural_ensembles/' folder if needed. 
 
-If you wish to repeat the results of other systems in the paper just to see plots and statistics (e.g., TEM1), you can use 'run_structural.py' instead of 'md_clone.py'.
 
-The '-c' argument will fetch the parameters and information from the corresponding section in the config file, md_config.ini. The value given to '-c' must be the same as the section name in the file.
-
-You can add new structural examples in the same format in that config file.
-
-You can update the specific value of parameters via the command line while still using a parameter set, such as the atom selection or the pdc parameter of CLoNe:
-
-    python md_clone.py -c SYSTEM_NAME -pdc NEW_VALUE
-    
-or
-
-    python md_clone.py -c SYSTEM_NAME -at_sel "name CA and resid 15 to 100"
-
-A full example without using the config file would be:
-
+    python md_clone.py -traj mytraj.xtc -topo mytopo.gro -pdc 5 -at_sel "name CA"
     python md_clone.py -traj mytraj.xtc -topo mytopo.gro -pdc 5 -at_sel "name CA" -pca 3
+    python md_clone.py -traj mytraj.xtc -topo mytopo.gro -pdc 5 -feat "features.txt"
+    python md_clone.py -traj mytraj.xtc -topo mytopo.gro -pdc 5 -feat "features.txt" -pca 2
 
-This loads the trajectory "mytraj" and its topology, extract the CA atoms xyz coordinates, performs PCA on them and the clustering will be based on the first 3 principal components.
+
+The '-feat' and '-at_sel' options are mutually exclusive: -feat will take priority over -at_sel. If -pca is set and a feature file is provided, PCA will be done on the features loaded from the file.
 
 For compatible trajectory and topology formats, see documentation of MDtraj.
 
-The atom selection uses the syntax of MDTraj. While you have basic examples above, please check their documentation for up to date selection syntax.
+The atom selection uses the syntax of MDTraj.
 
-At the end of the run, plots are shown, statistical info is written in terminal, and the path where output files are saved is written in the terminal.
+Alternatively, you can save specific parameter/file configurations in the 'md_config.ini' file. See the file for examples. This allows you to keep track and repeat some runs easily:
 
-In the output folder, you'll find:
+    python md_clone.py -c MY_SYSTEM
+    python md_clone.py -c APP
+
+
+3b-Output files
+----
+At the end of the run, plots are shown, statistical info is written in terminal, and the path where output files are saved is written in the terminal. CLoNe also creates an output folder containing several files. It is stored in the 'results/' folder, in another folder with either the name of the config used (-c option) or the name of the trajectory.
+
+In that output folder, you'll find:
 - Plots
 - Cluster summary
 - Parameters used
@@ -88,5 +84,22 @@ To run the Tcl scripts, do in a terminal:
     vmd -e load_clusters_VMD.tcl
 
 By default, they show VDW and color by fragments. If you open these Tcl files, you'll find inside some examples to change the representations to your tastes.
+
+4-Running on structural data from the paper
+----
+In a terminal:
+
+    python md_clone.py -c APP
+    python md_clone.py -c APP_bound
+
+If you wish to repeat the results of other systems in the paper just to see plots and statistics (e.g., TEM1), you can use 'test_structural.py' instead of 'md_clone.py' as the trajectory files are too big to share here.
+
+The '-c' argument will fetch the parameters and information from the corresponding section in the config file, md_config.ini. The value given to '-c' must be the same as the section name in the file.
+
+You can add new sections for your own datasets in that config file by following the same format.
+
+
+
+
 
 Enjoy !

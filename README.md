@@ -30,11 +30,14 @@ CLoNe was developed with python 3.7 and the following libraries:
 ----
 To test on a series of examples, please run:
     
-    python test_toysets.py
+    python run_data.py
 
 Then select the dataset you want to cluster. Plots will be saved in the current folder.
+You can use the same script with another dataset of your choice and by specifying a value for CLoNe's input parameter:
+    
+    python run_data.py examples/spiral_quartet.txt 2
 
-Outside of these tests, you can use clone.py as you would any clustering algorithm from scikit-learn's cluster module. Here's the minimal code to run:
+Alternatively, you can use clone.py as you would any clustering algorithm from scikit-learn's cluster module. Here's the minimal code to use:
 
     from clone import CLoNe
     clone = CLoNe() # or e.g. CLoNe(pdc=8) to change the input parameter
@@ -49,10 +52,10 @@ You can perform PCA on the atom selection (-at_sel, "name CA or name BB" by defa
 Alternatively, you can use a list of pre-computed features stored in a text file (first line are the headers, 1 frame per row, 1 feature per column). See examples of such files in the 'structural_ensembles/' folder if needed. 
 
 
-    python md_clone.py -traj mytraj.xtc -topo mytopo.gro -pdc 5 -at_sel "name CA"
-    python md_clone.py -traj mytraj.xtc -topo mytopo.gro -pdc 5 -at_sel "name CA" -pca 3
-    python md_clone.py -traj mytraj.xtc -topo mytopo.gro -pdc 5 -feat "features.txt"
-    python md_clone.py -traj mytraj.xtc -topo mytopo.gro -pdc 5 -feat "features.txt" -pca 2
+    python run_structural.py -traj mytraj.xtc -topo mytopo.gro -pdc 5 -at_sel "name CA"
+    python run_structural.py -traj mytraj.xtc -topo mytopo.gro -pdc 5 -at_sel "name CA" -pca 3
+    python run_structural.py -traj mytraj.xtc -topo mytopo.gro -pdc 5 -feat "features.txt"
+    python run_structural.py -traj mytraj.xtc -topo mytopo.gro -pdc 5 -feat "features.txt" -pca 2
 
 
 The '-feat' and '-at_sel' options are mutually exclusive: -feat will take priority over -at_sel. If -pca is set and a feature file is provided, PCA will be done on the features loaded from the file.
@@ -63,8 +66,8 @@ The atom selection uses the syntax of MDTraj.
 
 Alternatively, you can save specific parameter/file configurations in the 'md_config.ini' file. See the file for examples. This allows you to keep track and repeat some runs easily:
 
-    python md_clone.py -c MY_SYSTEM
-    python md_clone.py -c APP
+    python run_structural.py -c MY_SYSTEM
+    python run_structural.py -c APP
 
 
 3b-Output files
@@ -90,10 +93,10 @@ By default, they show VDW and color by fragments. If you open these Tcl files, y
 ----
 In a terminal:
 
-    python md_clone.py -c APP
-    python md_clone.py -c APP_bound
+    python run_structural.py -c APP
+    python run_structural.py -c APP_bound
 
-If you wish to repeat the results of other systems in the paper just to see plots and statistics (e.g., TEM1), you can use 'test_structural.py' instead of 'md_clone.py' as the trajectory files are too big to share here.
+If you wish to repeat the results of other systems in the paper just to see plots and statistics (e.g., TEM1), you can use 'test_structural.py' instead of 'run_structural.py' as the trajectory files are too big to share here.
 
 The '-c' argument will fetch the parameters and information from the corresponding section in the config file, md_config.ini. The value given to '-c' must be the same as the section name in the file.
 

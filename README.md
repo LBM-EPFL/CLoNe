@@ -30,7 +30,7 @@ CLoNe was developed with python 3.7 and the following libraries:
 ----
 To test on a series of examples, please run:
     
-    python run_test.py
+    python test_toysets.py
 
 Then select the dataset you want to cluster. Plots will be saved in the current folder.
 

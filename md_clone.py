@@ -19,7 +19,7 @@ from sklearn.preprocessing import StandardScaler
 
 from clone import CLoNe
 from plot import plot_clusters
-from md_handler import load_md_args, show_cluster_info
+from md_utils import load_md_args, show_cluster_info
 
 import mdtraj
 

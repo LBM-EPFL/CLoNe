@@ -17,44 +17,52 @@ import sys
 from plot import plot_clusters
 from clone import CLoNe
 
-
-
 print(__doc__)
-print("Chose a dataset below: ")
-print("  1. Noisy circles")
-print("  2. Noisy moons")
-print("  3. Varied")
-print("  4. Anisotropic")
-print("  5. Blobs")
-print("  6. No structure")
-print("  7. Flame")
-print("  8. Spiral")
-print("  9. Aggregation")
-print(" 10. S4")
 
-idx = 0
-while idx < 1 or idx > 10:
-    idx = int(input(">> #: "))
-idx -= 1
+if len(sys.argv) == 3:
+    name = sys.argv[1]
+    pdc = float(sys.argv[2])
+    idx = 0
 
-default = 10
-datasets = [
-    ("noisy_circles.txt", 6),
-    ("noisy_moons.txt",   default),
-    ("varied.txt",        default),
-    ("aniso.txt",         default),
-    ("blobs.txt",         default),
-    ("no_structure.txt",  default),
-    ("flame.txt",         default),
-    ("spiral.txt",        8),
-    ("aggregation.txt",   4),
-    ("s4.txt",            3),
-    ]
+else:
+    print("Chose a dataset below: ")
+    print(" 1. Noisy circles        8. Spiral")
+    print(" 2. Noisy moons          9. Aggregation")
+    print(" 3. Varied              10. S4")
+    print(" 4. Anisotropic         11. dim64")
+    print(" 5. Blobs               12. dim128")  
+    print(" 6. No structure        13. dim512")
+    print(" 7. Flame               14. dim1024")
 
-name = datasets[idx][0]
-pdc = datasets[idx][1]
-with open("examples/%s"%name, 'r') as f:
-    next(f)
+    idx = 0
+    while idx < 1 or idx > 14:
+        idx = int(input(">> #: "))
+    idx -= 1
+
+    default = 10
+    datasets = [
+        ("noisy_circles.txt", 6),
+        ("noisy_moons.txt",   default),
+        ("varied.txt",        default),
+        ("aniso.txt",         default),
+        ("blobs.txt",         default),
+        ("no_structure.txt",  default),
+        ("flame.txt",         default),
+        ("spiral.txt",        8),
+        ("aggregation.txt",   4),
+        ("s4.txt",            3),
+        ("dim64.txt",         4),
+        ("dim128.txt",        4),
+        ("dim512.txt",        4),
+        ("dim1024.txt",       4),
+        ]
+
+    name = "examples/%s"%datasets[idx][0]
+    pdc = datasets[idx][1]
+    
+with open(name, 'r') as f:
+    if idx < 10:
+        next(f)
     data = np.array([[float(x) for x in line.split()] for line in f])
     data = StandardScaler().fit_transform(data)
 
@@ -84,4 +92,7 @@ for c in range(len(centers)):
 print(top)
 
 # Plot
-plot_clusters(clone, data, ".")
+if data.shape[1] > 3:
+    print("> WARNING: data has more than 3 dimensions. Not plotting.")
+else:
+    plot_clusters(clone, data, ".")

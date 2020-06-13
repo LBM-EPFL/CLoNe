@@ -41,7 +41,7 @@ def load_md_args(parser):
     else:
         # Check if parameter sets already exists in md_confid.ini; else, load default.
         config = ConfigParser()
-        config.read('md_config.ini')
+        config.read('structural_config.ini')
         assert c_section in config.sections(), "Invalid config name; check md_config.ini for valid names"
         print("> Loading config for %s"%c_section)
         c = config[c_section]

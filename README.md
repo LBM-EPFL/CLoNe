@@ -78,6 +78,7 @@ In that output folder, you'll find:
 - Cluster centers as PDB files
 - Cluster subtrajectories as XTC files, and the original topology to open files easily with the scripts below
 - Two Tcl scripts for use with VMD in the output folder.
+- PCA projected coordinates in a text file if PCA was done
 
 To run the Tcl scripts, do in a terminal:
     vmd -e load_centers_VMD.tcl
@@ -97,8 +98,6 @@ If you wish to repeat the results of other systems in the paper just to see plot
 The '-c' argument will fetch the parameters and information from the corresponding section in the config file, md_config.ini. The value given to '-c' must be the same as the section name in the file.
 
 You can add new sections for your own datasets in that config file by following the same format.
-
-
 
 
 

@@ -86,8 +86,12 @@ In that output folder, you'll find:
 To run the Tcl scripts, do in a terminal:
     
     vmd -e load_centers_VMD.tcl
-    
     vmd -e load_clusters_VMD.tcl
+
+Or within the Tk Console of VMD:
+    
+    source load_centers_VMD.tcl
+    source load_clusters_VMD.tcl
 
 By default, they show VDW and color by fragments. If you open these Tcl files, you'll find inside some examples to change the representations to your tastes.
 

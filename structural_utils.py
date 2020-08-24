@@ -17,7 +17,7 @@ def load_md_args(parser):
     parser.add_argument("-traj", type=str, default="", help="Path and filename of trajectory to cluster")
     parser.add_argument("-topo", type=str, default="", help="Path and filename of topology file. Leave blank in case of multiframe PDB")
     parser.add_argument("-at_sel", type=str, default="name CA or name BB", help="Atom selection. Default to 'name CA or name BB'. Follows MDAnalysis' naming conventions. Resulting features used for clustering. If PCA is enabled, it will be applied on the selection.")
-    parser.add_argument("-feat", type=str, default="", help="Text file containing features to use for clustering. If PCA is enabled, it will be applied on these features.")
+    parser.add_argument("-feat", type=str, default="None", help="Text file containing features to use for clustering. If PCA is enabled, it will be applied on these features.")
     parser.add_argument("-pca", type=int, default=0, help="Whether to perform PCA on vectors. Value corresponds to the number of principal component to consider.")
     args = parser.parse_args()
     c_section = args.c
